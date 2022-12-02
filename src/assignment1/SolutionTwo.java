@@ -1,31 +1,14 @@
 package assignment1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+
+import utils.FileReader;
 
 public class SolutionTwo {
-    private static final String INPUT_FILE_NAME = "AdventOfCode2022/src/assignment1/input.txt";
+    private static final String INPUT_FILE_NAME = "AoC2022/src/assignment1/input.txt";
     private static final String DEFAULT_LINE_SEPARATOR = ";";
-    
-    public static String readFile(final String filename) {
-        final File inputFile = new File(filename);
-        final StringBuilder sb = new StringBuilder();
-
-        try (Scanner fileReader = new Scanner(inputFile)) {
-            while (fileReader.hasNextLine()) {
-                sb.append(fileReader.nextLine());
-                sb.append(DEFAULT_LINE_SEPARATOR);
-            }
-            fileReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
 
     private static List<String> parseData(String data) {
         final String[] splittedData = data.split(DEFAULT_LINE_SEPARATOR);
@@ -61,21 +44,19 @@ public class SolutionTwo {
         return result;
     }
 
-    public static void main(final String[] args) {
-        final String data = readFile(INPUT_FILE_NAME);
-        final List<String> parsedData = parseData(data);
-        final int[] sumOfAllCalories = doCalorieSum(parsedData);
-        
-        // for (final int calorieSum : sumOfAllCalories) {
-        //     System.out.println(calorieSum);
-        // }
-        
-        // System.out.println(Arrays.stream(sumOfAllCalories).max().getAsInt());
-        final int[] sortedArray = Arrays.stream(sumOfAllCalories).sorted().toArray();
-        final int sumOfLastThree = sortedArray[sortedArray.length -1] + sortedArray[sortedArray.length -2] + sortedArray[sortedArray.length -3];
-
-
-        System.out.println(sumOfLastThree);
+    private static int getSumOfHighestThreeCalories(final int[] values) {
+        final int[] sorted = Arrays.stream(values).sorted().toArray();
+        return sorted[sorted.length - 1] + sorted[sorted.length - 2] + sorted[sorted.length - 3];
     }
 
+    public static void main(final String[] args) {
+        final String data = FileReader.read(INPUT_FILE_NAME, DEFAULT_LINE_SEPARATOR);
+        final List<String> parsedData = parseData(data);
+        final int[] sumOfAllCalories = doCalorieSum(parsedData);
+
+        final int result = getSumOfHighestThreeCalories(sumOfAllCalories);
+
+        System.out.println(result);
+        System.out.println(result == 200044);
+    }
 }

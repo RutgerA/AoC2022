@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SolutionOne {
-    private static final String INPUT_FILE_NAME = "AdventOfCode2022/src/assignment1/input.txt";
+    private static final String INPUT_FILE_NAME = "AoC2022/src/assignment1/input.txt";
     private static final String DEFAULT_LINE_SEPARATOR = ";";
     
     private static String readFile(final String filename) {
@@ -61,12 +61,16 @@ public class SolutionOne {
         return result;
     }
 
+    private static int getMaximumValue(final int[] values) {
+        return Arrays.stream(values).max().getAsInt();
+    }
+
     public static void main(final String[] args) {
         final String data = readFile(INPUT_FILE_NAME);
         final List<String> parsedData = parseData(data);
         final int[] sumOfAllCalories = doCalorieSum(parsedData);
-        
-        System.out.println(Arrays.stream(sumOfAllCalories).max().getAsInt());
+        final int result = getMaximumValue(sumOfAllCalories);
+        System.out.println(result);
+        System.out.println(result == 68923);
     }
-
 }
