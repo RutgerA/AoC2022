@@ -1,31 +1,14 @@
 package assignment1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+
+import utils.FileReader;
 
 public class SolutionOne {
     private static final String INPUT_FILE_NAME = "AoC2022/src/assignment1/input.txt";
     private static final String DEFAULT_LINE_SEPARATOR = ";";
-    
-    private static String readFile(final String filename) {
-        final File inputFile = new File(filename);
-        final StringBuilder sb = new StringBuilder();
-
-        try (Scanner fileReader = new Scanner(inputFile)) {
-            while (fileReader.hasNextLine()) {
-                sb.append(fileReader.nextLine());
-                sb.append(DEFAULT_LINE_SEPARATOR);
-            }
-            fileReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
 
     private static List<String> parseData(String data) {
         final String[] splittedData = data.split(DEFAULT_LINE_SEPARATOR);
@@ -66,7 +49,7 @@ public class SolutionOne {
     }
 
     public static void main(final String[] args) {
-        final String data = readFile(INPUT_FILE_NAME);
+        final String data = FileReader.read(INPUT_FILE_NAME, DEFAULT_LINE_SEPARATOR);
         final List<String> parsedData = parseData(data);
         final int[] sumOfAllCalories = doCalorieSum(parsedData);
         final int result = getMaximumValue(sumOfAllCalories);
